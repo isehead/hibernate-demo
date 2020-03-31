@@ -1,7 +1,10 @@
 package com.hibernate.homework.entity;
 
 
+import com.hibernate.demo.DateUtils;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "employee")
@@ -21,10 +24,26 @@ public class Employee {
     @Column(name = "company")
     private String company;
 
-    public Employee(String surname, String givenName, String company) {
+    @Column(name = "date_of_birth")
+    @Temporal(TemporalType.DATE)
+    private Date dateOfBirth;
+
+    public Employee(String surname, String givenName, Date dateOfBirth, String company) {
         this.givenName = givenName;
         this.surname = surname;
         this.company = company;
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public Employee() {
     }
 
     public int getCid() {
@@ -65,6 +84,7 @@ public class Employee {
                 "cid=" + cid +
                 ", givenName='" + givenName + '\'' +
                 ", surname='" + surname + '\'' +
+                ", date of birth='" + DateUtils.formatDate(dateOfBirth) + '\'' +
                 ", company='" + company + '\'' +
                 '}';
     }
