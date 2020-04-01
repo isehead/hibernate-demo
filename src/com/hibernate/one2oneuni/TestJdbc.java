@@ -1,4 +1,4 @@
-package com.hibernate.one2one;
+package com.hibernate.one2oneuni;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

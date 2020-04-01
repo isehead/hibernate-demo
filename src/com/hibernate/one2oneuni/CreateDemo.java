@@ -1,4 +1,4 @@
-package com.hibernate.one2one;
+package com.hibernate.one2oneuni;
 
 import com.hibernate.demo.entity.Instructor;
 import com.hibernate.demo.entity.InstructorDetail;
@@ -6,7 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class DeleteDemo {
+public class CreateDemo {
 
     public static void main(String[] args) {
 
@@ -21,21 +21,21 @@ public class DeleteDemo {
         Session session = factory.getCurrentSession();
 
         try {
+            // create the objects
+//            Instructor tempInstructor = new Instructor("Chad", "Darby", "darby@l2code.com");
+//            InstructorDetail tempInstructorDetail = new InstructorDetail("http://youtube.com","L2Code");
+            Instructor tempInstructor = new Instructor("Thierry", "Henry", "th@l2code.com");
+            InstructorDetail tempInstructorDetail = new InstructorDetail("psports","football");
+
+            // associate the objects
+            tempInstructor.setInstructorDetail(tempInstructorDetail);
+
+            // start a transaction
             session.beginTransaction();
 
-            // get the instructor by ID
-            int theId = 1;
-            Instructor tempInstructor = session.get(Instructor.class, theId);
-
-            System.out.println("Found instructor: " + tempInstructor);
-
-            // delete the instructor
-            if (tempInstructor != null){
-                System.out.println("Deleting: " + tempInstructor);
-
-                // will also delete "details" object due to cascading
-                session.delete(tempInstructor);
-            }
+            // save the instructor, CascadeType.ALL includes saving associated object
+            System.out.println("Saving instructor: " + tempInstructor);
+            session.save(tempInstructor);
 
             // commit transaction
             session.getTransaction().commit();

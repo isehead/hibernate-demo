@@ -1,6 +1,7 @@
-package com.hibernate.homework.entity;
+package com.hibernate.homework;
 
 import com.hibernate.demo.DateUtils;
+import com.hibernate.homework.entity.Employee;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
