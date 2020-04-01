@@ -1,4 +1,4 @@
-package com.hibernate.one2oneuni;
+package com.hibernate.one2onebi;
 
 import com.hibernate.demo.entity.Instructor;
 import com.hibernate.demo.entity.InstructorDetail;
@@ -6,7 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class DeleteDemo {
+public class DeleteInstructorDetailDemo {
 
     public static void main(String[] args) {
 
@@ -23,28 +23,28 @@ public class DeleteDemo {
         try {
             session.beginTransaction();
 
-            // get the instructor by ID
-            int theId = 2;
-            Instructor tempInstructor = session.get(Instructor.class, theId);
+            // get the instructor detail object
+            int theId = 4;
+            InstructorDetail instructorDetail = session.get(InstructorDetail.class, theId);
 
-            System.out.println("Found instructor: " + tempInstructor);
+            // print the instructor detail
+            System.out.println("Instructor detail: " + instructorDetail);
 
-            // delete the instructor
-            if (tempInstructor != null) {
-                System.out.println("Deleting: " + tempInstructor);
+            // print the associated instructor
+            System.out.println("Associated instructor: " + instructorDetail.getInstructor());
 
-                // will also delete "details" object due to cascading
-                session.delete(tempInstructor);
-            }
+            // delete associated instructor
+            System.out.println("Deleting instructor detail: " + instructorDetail);
+
+            // remove the associated object reference
+            instructorDetail.getInstructor().setInstructorDetail(null);
+            session.delete(instructorDetail);
 
             // commit transaction
             session.getTransaction().commit();
             System.out.println("Done!");
-        } catch (Exception e) {
-            e.printStackTrace();
+
         } finally {
-            // close the session
-            session.close();
             factory.close();
         }
 
