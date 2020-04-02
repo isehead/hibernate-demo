@@ -1,5 +1,7 @@
 package com.hibernate.demo.entity;
 
+import jdk.nashorn.internal.objects.annotations.Getter;
+
 import javax.persistence.*;
 
 @Entity
