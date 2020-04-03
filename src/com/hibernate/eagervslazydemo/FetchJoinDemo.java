@@ -7,7 +7,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class EagerLazyDemo {
+import org.hibernate.query.Query;
+
+public class FetchJoinDemo {
 
     public static void main(String[] args) {
 
@@ -28,21 +30,25 @@ public class EagerLazyDemo {
 
             // get the instructor from the database
             int theId = 1;
-            Instructor instructor = session.get(Instructor.class, theId);
-            System.out.println("EAGER/ Requested instructor: ");
 
-            // show courses list
-            System.out.println("EAGER/ Requested courses: " + instructor);
-            System.out.println(instructor.getCourseList());
+            Query<Instructor> query = session.createQuery("SELECT i FROM Instructor i JOIN FETCH i.courseList " +
+                    "WHERE i.id=:theInstructorId", Instructor.class);
+
+            // set parameter on query
+            query.setParameter("theInstructorId", theId);
+
+            // execute query and get the instructor
+            Instructor instructor = query.getSingleResult();
+            System.out.println("Requested instructor: " + instructor);
 
             // commit transaction
             session.getTransaction().commit();
 
             // create session on purpose
             session.close();
+            System.out.println("Done!");
 
             System.out.println("Courses: " + instructor.getCourseList());
-            System.out.println("EAGER/ Done!");
 
         } finally {
             session.close();
