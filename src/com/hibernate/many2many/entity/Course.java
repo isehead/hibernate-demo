@@ -85,7 +85,7 @@ public class Course {
         return "Course{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                '}';
+                '}' + "\n";
     }
 
     // convenience method to add a review
